@@ -2,3 +2,4 @@ __pycache__
 /django/data
 django/ollama_prompts.json
 django/media/prompt_responses
+static/

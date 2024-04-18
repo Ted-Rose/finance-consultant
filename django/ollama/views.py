@@ -5,7 +5,17 @@ from django.shortcuts import render
 from gtts import gTTS
 import os
 
-def index(request):
+def production_request(request):
+    # This view is called when the site is deployed online. It will make
+    # an API request to locally hosted version of this project
+    # triggering view local_request and returning the response from
+    # locally hosted ollama app thus making a quick fix for ollama's
+    # resistance of accepting requests from the internet.
+    return render(
+        request,
+        'ollama/local_request.html',)
+
+def local_request(request):
     url = 'http://localhost:11434/api/generate'
     category_list = '''
         {
