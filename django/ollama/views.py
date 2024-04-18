@@ -4,10 +4,51 @@ import json
 
 def index(request):
     url = 'http://localhost:11434/api/generate'
+    category_list = """
+        {
+            "good_borrower": {
+                "Balance is more than 2 000 EUR"
+            },
+            "bad_borrower": {
+                "Balance is less than 100 EUR"
+            }
+        }
+    """
+    balance = """
+        {
+            "accounts": [
+                {
+                    "balanceAmount": {
+                        "amount": "99.00",
+                        "currency": "EUR"
+                    },
+                    "balanceType": "interimBooked",
+                    "referenceDate": "2022-10-10"
+                },
+                {
+                    "balanceAmount": {
+                        "amount": "12.00",
+                        "currency": "EUR"
+                    },
+                    "balanceType": "interimAvailable",
+                    "referenceDate": "2022-10-10"
+                }
+            ]
+        }
+    """
+    prompt = (
+        "Your task as a creditor's assistant is to categorize a borrower's\
+            application based on their bank balance report. Here is the \
+            balance report:" + balance + " The categorization is based on \
+            the following criteria:" + category_list + "Based on the balance \
+            report provided, categorize the borrower using a single word from \
+            the category list ('good_borrower' or 'bad_borrower')"
+    )
     data = {
         "model": "llama2",
-        "prompt": "Why is the sky blue?"
+        "prompt": prompt
     }
+    print("prompt:\n", prompt)
     response = requests.post(url, json=data)
 
     # Check if the request was successful
