@@ -4,38 +4,38 @@ import json
 
 def index(request):
     url = 'http://localhost:11434/api/generate'
-    category_list = """
+    category_list = '''
         {
-            "good_borrower": {
-                "Balance is more than 2 000 EUR"
+            'good_borrower': {
+                'Balance is more than 2 000 EUR'
             },
-            "bad_borrower": {
-                "Balance is less than 100 EUR"
+            'bad_borrower': {
+                'Balance is less than 100 EUR'
             }
         }
-    """
-    balance = """
+    '''
+    balance = '''
         {
-            "accounts": [
+            'accounts': [
                 {
-                    "balanceAmount": {
-                        "amount": "99.00",
-                        "currency": "EUR"
+                    'balanceAmount': {
+                        'amount': '99.00',
+                        'currency': 'EUR'
                     },
-                    "balanceType": "interimBooked",
-                    "referenceDate": "2022-10-10"
+                    'balanceType': 'interimBooked',
+                    'referenceDate': '2022-10-10'
                 },
                 {
-                    "balanceAmount": {
-                        "amount": "12.00",
-                        "currency": "EUR"
+                    'balanceAmount': {
+                        'amount': '12.00',
+                        'currency': 'EUR'
                     },
-                    "balanceType": "interimAvailable",
-                    "referenceDate": "2022-10-10"
+                    'balanceType': 'interimAvailable',
+                    'referenceDate': '2022-10-10'
                 }
             ]
         }
-    """
+    '''
     prompt = (
         "Your task as a creditor's assistant is to categorize a borrower's\
             application based on their bank balance report. Here is the \
@@ -45,10 +45,10 @@ def index(request):
             the category list ('good_borrower' or 'bad_borrower')"
     )
     data = {
-        "model": "llama2",
-        "prompt": prompt
+        'model': 'llama2',
+        'prompt': prompt
     }
-    print("prompt:\n", prompt)
+    print('prompt:\n', prompt)
     response = requests.post(url, json=data)
 
     # Check if the request was successful
@@ -66,8 +66,23 @@ def index(request):
                     break
 
         print(full_response)
+
+        # Read the existing data from the file, or create a new list if the file doesn't exist
+        try:
+            with open('ollama_prompts.json', 'r') as json_file:
+                data_list = json.load(json_file)
+        except FileNotFoundError:
+            data_list = []
+
+        # Append the new prompt and response to the data list
+        data_list.append({'prompt': prompt, 'response': full_response})
+
+        # Save the updated data list to the JSON file
+        with open('ollama_prompts.json', 'w') as json_file:
+            json.dump(data_list, json_file, indent=4)
+
         return HttpResponse(full_response)
     else:
-        error_message = f"Request failed with status code: {response.status_code}"
+        error_message = f'Request failed with status code: {response.status_code}'
         print(error_message)
         return HttpResponse(error_message)
