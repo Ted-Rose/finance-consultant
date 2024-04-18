@@ -1,6 +1,6 @@
-from django.http import HttpResponse
 import requests
 import json
+from django.shortcuts import render
 
 def index(request):
     url = 'http://localhost:11434/api/generate'
@@ -81,8 +81,21 @@ def index(request):
         with open('ollama_prompts.json', 'w') as json_file:
             json.dump(data_list, json_file, indent=4)
 
-        return HttpResponse(full_response)
+        return render(
+            request,
+            'ollama/home.html',
+            {
+                'prompt': prompt,
+                'response': full_response,
+            }
+        )
     else:
         error_message = f'Request failed with status code: {response.status_code}'
         print(error_message)
-        return HttpResponse(error_message)
+        return render(
+            request,
+            'ollama/home.html',
+            {
+                'error_message': error_message
+            }
+        )
