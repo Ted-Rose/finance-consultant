@@ -1,6 +1,9 @@
 import requests
 import json
+from django.conf import settings
 from django.shortcuts import render
+from gtts import gTTS
+import os
 
 def index(request):
     url = 'http://localhost:11434/api/generate'
@@ -81,16 +84,27 @@ def index(request):
         with open('ollama_prompts.json', 'w') as json_file:
             json.dump(data_list, json_file, indent=4)
 
+        text_to_audio = gTTS(text=full_response, lang='en', slow=False)
+        audio_file_path = os.path.join(
+            settings.MEDIA_ROOT,
+            'prompt_responses/prompt_response.mp3'
+        )
+        text_to_audio.save(audio_file_path)
+        audio_file_url = \
+            settings.MEDIA_URL + 'prompt_responses/prompt_response.mp3'
+
         return render(
             request,
             'ollama/home.html',
             {
                 'prompt': prompt,
                 'response': full_response,
+                'audio_file_url': audio_file_url,
             }
         )
     else:
-        error_message = f'Request failed with status code: {response.status_code}'
+        error_message = f'Request failed with status code: \
+            {response.status_code}'
         print(error_message)
         return render(
             request,
