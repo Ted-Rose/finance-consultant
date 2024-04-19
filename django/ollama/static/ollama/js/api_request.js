@@ -1,16 +1,29 @@
+import { getCookie } from './get_cookie.js';
+
 function fetchLocalRequest() {
-    const apiUrl = 'http://127.0.0.1:8000/ollama/local';
+    const apiUrl = 'https://127.0.0.1:8000/ollama/local';
+    const userInput = document.getElementById('userInput').value;
     const controller = new AbortController();
     const signal = controller.signal;
     const timeoutId = setTimeout(() => controller.abort(), 180000);
 
-    fetch(apiUrl, {
-        method: 'GET',
+    // Update the prompt with the user's question
+    document.getElementById('prompt').textContent = userInput;
+
+    // Assuming the server expects the user input in a field named 'question'
+    const requestData = {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
         },
-        signal: signal
-    })
+        body: JSON.stringify({ question: userInput }),
+        signal: signal,
+        // Include cookies with the request
+        credentials: 'include'
+    };
+
+    fetch(apiUrl, requestData)
         .then(response => {
             // Clear the timeout if the response is received
             clearTimeout(timeoutId);
@@ -36,7 +49,8 @@ function fetchLocalRequest() {
         });
 }
 
-// Call the function when the DOM is fully loaded
+// Call fetchLocalRequest when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
-    fetchLocalRequest();
+    // Attach the event listener to the button
+    document.querySelector('button').addEventListener('click', fetchLocalRequest);
 });

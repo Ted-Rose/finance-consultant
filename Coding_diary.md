@@ -1,3 +1,7 @@
+6. Fixed error `POST https://127.0.0.1:8000/ollama/local net::ERR_CERT_AUTHORITY_INVALID` by accessing and hosting local django project over local network with `python manage.py runsslserver 0.0.0.0:8000`
+5. Fixed error `POST https://127.0.0.1:8000/ollama/local net::ERR_CERT_AUTHORITY_INVALID` returned by the browser by adding sites https://127.0.0.1:8000/ollama/local SSL certificate to trusted certificates
+4. `python manage.py runsslserver`
+    - Run locally django project over HTTPS
 3. https://www.pythonanywhere.com/user/FinanceConsultant/consoles/33404427/
     - `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
         - Replace your_email@example.com with the email address associated with your GitHub account.

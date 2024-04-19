@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'financeconsultant.pythonanywhere.com',
-    '127.0.0.1'
+    '127.0.0.1',
     ]
 
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ollama',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,11 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'https://financeconsultant.pythonanywhere.com',
+    'http://financeconsultant.pythonanywhere.com',
+    'http://127.0.0.1/'
 ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'finance_consultant.urls'
 

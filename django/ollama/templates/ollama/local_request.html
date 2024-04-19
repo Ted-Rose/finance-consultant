@@ -1,18 +1,24 @@
+{% csrf_token %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>AI Finance Consultant</title>
-    <script src="{% static 'ollama/js/api_request.js' %}" defer></script>
+    <script src="{% static 'ollama/js/api_request.js' %}" type="module"></script>
 </head>
 
 <body>
+    <h2>Ask AI Finance Consultant:</h2>
+    <input type="text" id="userInput" placeholder="Enter your question here">
+    <button>Submit</button> <!-- Removed the inline onclick handler -->
+    <br><br>
+
     <h2>You asked:</h2>
-    <p id="prompt">Loading...</p>
+    <p id="prompt">Waiting for input...</p>
     <br>
     <h2>AI Finance Consultant answers:</h2>
-    <p id="response">Loading...</p>
+    <p id="response">Waiting for input...</p>
     <br>
     <audio id="audioPlayer" controls>
         Your browser does not support the audio element.
