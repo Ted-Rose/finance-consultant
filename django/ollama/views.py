@@ -22,45 +22,42 @@ def production_request(request):
 @csrf_exempt
 def local_request(request):
     url = 'http://localhost:11434/api/generate'
-    category_list = '''
-        {
-            'good_borrower': {
-                'Balance is more than 2 000 EUR'
-            },
-            'bad_borrower': {
-                'Balance is less than 100 EUR'
-            }
-        }
-    '''
-    balance = '''
-        {
-            'accounts': [
-                {
-                    'balanceAmount': {
-                        'amount': '99.00',
-                        'currency': 'EUR'
-                    },
-                    'balanceType': 'interimBooked',
-                    'referenceDate': '2022-10-10'
+    question = json.loads(request.body).get('question', '')
+    transactions = '''
+            {
+                "transactionId": "9492293",
+                "bookingDate": "2024-04-01",
+                "transactionAmount": {
+                    "amount": "438.0",
+                    "currency": "ISK"
                 },
-                {
-                    'balanceAmount': {
-                        'amount': '12.00',
-                        'currency': 'EUR'
-                    },
-                    'balanceType': 'interimAvailable',
-                    'referenceDate': '2022-10-10'
-                }
-            ]
-        }
+                "creditorName": "John Smith",
+                "remittanceInformation": "Big toy car"
+            },
+            {
+                "transactionId": "9492288",
+                "bookingDate": "2021-09-25",
+                "transactionAmount": {
+                    "amount": "-121.19",
+                    "currency": "ISK"
+                },
+                "creditorName": "Bob Doe",
+                "remittanceInformation": "McDonnald's"
+            },
+            {
+                "transactionId": "9492294",
+                "bookingDate": "2024-03-31",
+                "transactionAmount": {
+                    "amount": "-9.0",
+                    "currency": "ISK"
+                },
+                "creditorName": "Jake Jones",
+                "remittanceInformation": "Car repair"
+            }
     '''
     prompt = (
-        "Your task as a creditor's assistant is to categorize a borrower's\
-            application based on their bank balance report. Here is the \
-            balance report:" + balance + " The categorization is based on \
-            the following criteria:" + category_list + "Based on the balance \
-            report provided, categorize the borrower using a single word from \
-            the category list ('good_borrower' or 'bad_borrower')"
+        "Your a finance consultant. Please tell me " + question + "? Based on \
+        this list of transactions: " + transactions
     )
     data = {
         'model': 'llama2',

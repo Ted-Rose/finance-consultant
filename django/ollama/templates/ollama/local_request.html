@@ -4,10 +4,6 @@
 
 <head>
     <title>AI Finance Consultant</title>
-        <!-- Include the CSRF token as a JavaScript variable -->
-        <script type="text/javascript">
-            var csrfToken = '{{ csrf_token }}';
-        </script>
     <script src="{% static 'ollama/js/api_request.js' %}" type="module"></script>
 </head>
 
@@ -17,6 +13,39 @@
     <button>Submit</button>
     <br><br>
 
+    <h2>Your transactions:</h2>
+        <pre>[
+            {
+                "transactionId": "9492293",
+                "bookingDate": "2024-04-01",
+                "transactionAmount": {
+                    "amount": "438.0",
+                    "currency": "ISK"
+                },
+                "creditorName": "John Smith",
+                "remittanceInformation": "Big toy car"
+            },
+            {
+                "transactionId": "9492288",
+                "bookingDate": "2021-09-25",
+                "transactionAmount": {
+                    "amount": "-121.19",
+                    "currency": "ISK"
+                },
+                "creditorName": "Bob Doe",
+                "remittanceInformation": "McDonnald's"
+            },
+            {
+                "transactionId": "9492294",
+                "bookingDate": "2024-03-31",
+                "transactionAmount": {
+                    "amount": "-9.0",
+                    "currency": "ISK"
+                },
+                "creditorName": "Jake Jones",
+                "remittanceInformation": "Car repair"
+            }
+        ]</pre>
     <h2>You asked:</h2>
     <p id="prompt">Waiting for input...</p>
     <br>

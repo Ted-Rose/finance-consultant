@@ -2,7 +2,6 @@ function fetchLocalRequest() {
     const apiUrl = 'https://127.0.0.1:8000/ollama/local';
     const userInput = document.getElementById('userInput').value;
     const controller = new AbortController();
-    const signal = controller.signal;
     const timeoutId = setTimeout(() => controller.abort(), 180000);
 
     // Update the prompt with the user's question
@@ -12,10 +11,8 @@ function fetchLocalRequest() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken,
         },
         body: JSON.stringify({ question: userInput }),
-        signal: signal,
     };
 
     fetch(apiUrl, requestData)
