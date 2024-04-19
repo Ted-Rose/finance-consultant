@@ -5,7 +5,7 @@ def voice_input():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Say something!")
-        audio = r.listen(source)
+        audio = r.listen(source, phrase_time_limit=5)
 
     # recognize speech using Sphinx
     try:

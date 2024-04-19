@@ -10,7 +10,6 @@ from .utils import voice_input
 
 @csrf_exempt
 def transcribe(request):
-    print("in here")
     if request.method == 'POST':
         # Call the voice_input function
         transcription = voice_input()
@@ -75,15 +74,19 @@ def local_request(request):
         'prompt': prompt
     }
     print('prompt:\n', prompt)
-    response = requests.post(url, json=data)
+    response = requests.post(url, json=data, stream=True)
     # Check if the request was successful
     if response.status_code == 200:
         full_response = ''
         # The response from the API comes in chunks, thus iterate the lines
         for line in response.iter_lines():
             if line:
-                json_response = json.loads(line)
-                full_response += json_response.get('response', '')
+                # Decode the line to a string, then load it as JSON
+                json_response = json.loads(line.decode('utf-8'))
+                # Print each batch of the response
+                response = json_response.get('response', '')
+                print(response)
+                full_response += response
 
                 # If the 'done' key is True the response is complete
                 if json_response.get('done', False):
