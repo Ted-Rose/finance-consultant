@@ -16,8 +16,6 @@ function fetchLocalRequest() {
         },
         body: JSON.stringify({ question: userInput }),
         signal: signal,
-        // Include cookies with the request
-        credentials: 'include'
     };
 
     fetch(apiUrl, requestData)

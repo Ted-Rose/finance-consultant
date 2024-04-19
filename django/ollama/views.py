@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import render
-from django.middleware.csrf import get_token
+from django.views.decorators.csrf import csrf_exempt
 from gtts import gTTS
 import os
 
@@ -13,13 +13,13 @@ def production_request(request):
     # triggering view local_request and returning the response from
     # locally hosted ollama app thus making a quick fix for ollama's
     # resistance of accepting requests from the internet.
-    csrf_token = get_token(request)
     return render(
         request,
         'ollama/local_request.html',
-        {'csrf_token': csrf_token},
     )
-
+# Don't do csrf_token check as the local django didn't render the form
+# to the client
+@csrf_exempt
 def local_request(request):
     url = 'http://localhost:11434/api/generate'
     category_list = '''
@@ -92,8 +92,7 @@ def local_request(request):
         except FileNotFoundError:
             data_list = []
 
-        # Append the new prompt and response to the data list
-        data_list.append({'prompt': prompt, 'response': full_response})
+        data_list.append({'response': full_response})
 
         # Save the updated data list to the JSON file
         with open('ollama_prompts.json', 'w') as json_file:
@@ -106,10 +105,9 @@ def local_request(request):
         )
         text_to_audio.save(audio_file_path)
         audio_file_url = \
-            'http://127.0.0.1:8000/media/' + 'prompt_responses/prompt_response.mp3'
+            'https://127.0.0.1:8000/media/' + 'prompt_responses/prompt_response.mp3'
 
         return JsonResponse({
-            'prompt': prompt,
             'response': full_response,
             'audio_file_url': audio_file_url,
         })
