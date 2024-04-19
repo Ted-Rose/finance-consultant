@@ -1,17 +1,20 @@
-{% csrf_token %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>AI Finance Consultant</title>
+    <!-- Include the CSRF token as a JavaScript variable -->
+    <script type="text/javascript">
+        var csrfToken = '{{ csrf_token }}';
+    </script>
     <script src="{% static 'ollama/js/api_request.js' %}" type="module"></script>
 </head>
 
 <body>
     <h2>Ask AI Finance Consultant:</h2>
     <input type="text" id="userInput" placeholder="Enter your question here">
-    <button>Submit</button> <!-- Removed the inline onclick handler -->
+    <button>Submit</button>
     <br><br>
 
     <h2>You asked:</h2>

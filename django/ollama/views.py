@@ -3,6 +3,7 @@ import json
 from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import render
+from django.middleware.csrf import get_token
 from gtts import gTTS
 import os
 
@@ -12,9 +13,12 @@ def production_request(request):
     # triggering view local_request and returning the response from
     # locally hosted ollama app thus making a quick fix for ollama's
     # resistance of accepting requests from the internet.
+    csrf_token = get_token(request)
     return render(
         request,
-        'ollama/local_request.html',)
+        {'csrf_token': csrf_token},
+        'ollama/local_request.html',
+    )
 
 def local_request(request):
     url = 'http://localhost:11434/api/generate'

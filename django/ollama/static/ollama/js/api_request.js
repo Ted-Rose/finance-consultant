@@ -1,5 +1,3 @@
-import { getCookie } from './get_cookie.js';
-
 function fetchLocalRequest() {
     const apiUrl = 'https://127.0.0.1:8000/ollama/local';
     const userInput = document.getElementById('userInput').value;
@@ -10,12 +8,11 @@ function fetchLocalRequest() {
     // Update the prompt with the user's question
     document.getElementById('prompt').textContent = userInput;
 
-    // Assuming the server expects the user input in a field named 'question'
     const requestData = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken'),
+            'X-CSRFToken': csrfToken,
         },
         body: JSON.stringify({ question: userInput }),
         signal: signal,
@@ -49,8 +46,9 @@ function fetchLocalRequest() {
         });
 }
 
-// Call fetchLocalRequest when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
-    // Attach the event listener to the button
-    document.querySelector('button').addEventListener('click', fetchLocalRequest);
+    const submitButton = document.querySelector('button');
+    submitButton.addEventListener('click', function () {
+        fetchLocalRequest();
+    });
 });

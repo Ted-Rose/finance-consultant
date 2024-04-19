@@ -1,4 +1,4 @@
-6. Fixed error `POST https://127.0.0.1:8000/ollama/local net::ERR_CERT_AUTHORITY_INVALID` by accessing and hosting local django project over local network with `python manage.py runsslserver 0.0.0.0:8000`
+6. Fixed error `Forbidden (Origin checking failed - https://financeconsultant.pythonanywhere.com does not match any trusted origins.): /ollama/local` by adding `CSRF_TRUSTED_ORIGINS` to `settings.py`
 5. Fixed error `POST https://127.0.0.1:8000/ollama/local net::ERR_CERT_AUTHORITY_INVALID` returned by the browser by adding sites https://127.0.0.1:8000/ollama/local SSL certificate to trusted certificates
 4. `python manage.py runsslserver`
     - Run locally django project over HTTPS
