@@ -13,7 +13,10 @@
         - !!! Choose `» Manual configuration (including virtualenvs)`
         - `Source code:` = `/home/FinanceConsultant/finance-consultant`
         - In `/var/www/financeconsultant_pythonanywhere_com_wsgi.py` paste contents of this projects file `financeconsultant_pythonanywhere_com_wsgi.py`
-        `python manage.py collectstatic`
+        - `python manage.py collectstatic`
+        - Define `Static files` in pythonanywhere:
+            - `URL` = `/static/`
+            - `Directory:` = `/home/FinanceConsultant/finance-consultant/django/static`
 2. `pip install gTTS`
     - "gTTS" is a Python library for text-to-speech conversion
 1. `docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama`

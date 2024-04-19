@@ -1,5 +1,6 @@
 import requests
 import json
+from django.http import JsonResponse
 from django.conf import settings
 from django.shortcuts import render
 from gtts import gTTS
@@ -101,25 +102,33 @@ def local_request(request):
         )
         text_to_audio.save(audio_file_path)
         audio_file_url = \
-            settings.MEDIA_URL + 'prompt_responses/prompt_response.mp3'
+            'http://127.0.0.1:8000/media/' + 'prompt_responses/prompt_response.mp3'
 
-        return render(
-            request,
-            'ollama/home.html',
-            {
-                'prompt': prompt,
-                'response': full_response,
-                'audio_file_url': audio_file_url,
-            }
-        )
+        return JsonResponse({
+            'prompt': prompt,
+            'response': full_response,
+            'audio_file_url': audio_file_url,
+        })
+        # return render(
+        #     request,
+        #     'ollama/home.html',
+        #     {
+        #         'prompt': prompt,
+        #         'response': full_response,
+        #         'audio_file_url': audio_file_url,
+        #     }
+        # )
     else:
-        error_message = f'Request failed with status code: \
-            {response.status_code}'
-        print(error_message)
-        return render(
-            request,
-            'ollama/home.html',
-            {
-                'error_message': error_message
-            }
-        )
+        error_message = f'Request failed with status code: {response.status_code}'
+        # Return the error message in a JSON response
+        return JsonResponse({'error_message': error_message}, status=response.status_code)
+        # error_message = f'Request failed with status code: \
+        #     {response.status_code}'
+        # print(error_message)
+        # return render(
+        #     request,
+        #     'ollama/home.html',
+        #     {
+        #         'error_message': error_message
+        #     }
+        # )

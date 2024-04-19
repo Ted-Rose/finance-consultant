@@ -52,11 +52,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'https://krl9y9.csb.app',
+    'https://financeconsultant.pythonanywhere.com',
 ]
 
 ROOT_URLCONF = 'finance_consultant.urls'
