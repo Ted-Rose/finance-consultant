@@ -16,8 +16,8 @@ def production_request(request):
     csrf_token = get_token(request)
     return render(
         request,
-        {'csrf_token': csrf_token},
         'ollama/local_request.html',
+        {'csrf_token': csrf_token},
     )
 
 def local_request(request):
