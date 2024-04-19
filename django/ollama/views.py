@@ -76,11 +76,9 @@ def local_request(request):
     }
     print('prompt:\n', prompt)
     response = requests.post(url, json=data)
-
     # Check if the request was successful
     if response.status_code == 200:
         full_response = ''
-
         # The response from the API comes in chunks, thus iterate the lines
         for line in response.iter_lines():
             if line:

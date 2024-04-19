@@ -1,20 +1,56 @@
 {% load static %}
+{% get_media_prefix as MEDIA_PREFIX %} <!-- Retrieve the media URL prefix -->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>AI Finance Consultant</title>
+    <link rel="stylesheet" href="{% static 'ollama/css/local_request.css' %}">
     <script src="{% static 'ollama/js/api_request.js' %}" type="module"></script>
 </head>
 
 <body>
-    <h2>Ask AI Finance Consultant:</h2>
-    <input type="text" id="userInput" placeholder="Enter your question here">
-    <button>Submit</button>
-    <br><br>
+    <h2>Your private AI Finance Consultant</h2>
+    <div class="logo-container">
+        <img src="{{ MEDIA_PREFIX }}Finance_consultant_logo_no_mic.png" alt="Finance Consultant Logo">
+    </div>
+    <h3>You asked:</h3>
+    <p id="prompt">Waiting for input...</p>
+    <h3>AI Finance Consultant answers:</h3>
+    <p id="response">Waiting for input...</p>
+    <button id="voiceInputButton">Voice Input</button>
+    <script type="module">
+        import { fetchLocalRequest } from '{% static 'ollama/js/api_request.js' %}';
 
-    <h2>Your transactions:</h2>
-        <pre>[
+        window.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('voiceInputButton').addEventListener('click', function () {
+                fetch('transcribe/', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.transcription) {
+                            const userInput = document.getElementById('submitButton'); // This should be 'userInput' based on your placeholder
+                            userInput.value = data.transcription;
+                            if (userInput.value.trim() !== 'Enter your question here') {
+                                fetchLocalRequest(data.transcription);
+                            }
+                        } else {
+                            alert(data.error || 'An error occurred while transcribing audio.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    </script>
+    <audio id="audioPlayer" controls>
+        Your browser does not support the audio element.
+    </audio>
+    <h2 id="error"></h2>
+    <h3>Your transactions</h3>
+    <pre class="transactions">
+        [
             {
                 "transactionId": "9492293",
                 "bookingDate": "2024-04-01",
@@ -45,38 +81,9 @@
                 "creditorName": "Jake Jones",
                 "remittanceInformation": "Car repair"
             }
-        ]</pre>
-    <h2>You asked:</h2>
-    <p id="prompt">Waiting for input...</p>
-    <br>
-    <h2>AI Finance Consultant answers:</h2>
-    <p id="response">Waiting for input...</p>
-    <br>
-    <button id="voiceInputButton">Voice Input</button>
-    <script type="module">
-        import { fetchLocalRequest } from '{% static 'ollama/js/api_request.js' %}';
-
-        document.getElementById('voiceInputButton').addEventListener('click', function () {
-            fetch('transcribe/', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.transcription) {
-                        const userInput = document.getElementById('userInput');
-                        userInput.value = data.transcription;
-                        fetchLocalRequest(userInput.value);
-                    } else {
-                        alert(data.error || 'An error occurred while transcribing audio.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        });
-    </script>
-    <audio id="audioPlayer" controls>
-        Your browser does not support the audio element.
-    </audio>
-    <h2 id="error"></h2>
-</body>
-
-</html>
+            ]</pre>
+            <br><br><br><br><br><br><br><br>
+        <input type="text" id="userInput" placeholder="Enter your question here">
+        <button id="submitButton">Submit</button>
+        </body>
+        </html>

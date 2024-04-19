@@ -1,6 +1,6 @@
-export function fetchLocalRequest() {
+export function fetchLocalRequest(userInput) {
     const apiUrl = 'https://127.0.0.1:8000/ollama/local';
-    const userInput = document.getElementById('userInput').value;
+    // const userInput = document.getElementById('userInput').value;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 180000);
 
@@ -42,7 +42,7 @@ export function fetchLocalRequest() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const submitButton = document.querySelector('button');
+    const submitButton = document.querySelector('voiceInputButton');
     submitButton.addEventListener('click', function () {
         fetchLocalRequest();
     });
