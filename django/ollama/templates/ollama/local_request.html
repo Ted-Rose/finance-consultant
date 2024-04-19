@@ -52,6 +52,27 @@
     <h2>AI Finance Consultant answers:</h2>
     <p id="response">Waiting for input...</p>
     <br>
+    <button id="voiceInputButton">Voice Input</button>
+    <script type="module">
+        import { fetchLocalRequest } from '{% static 'ollama/js/api_request.js' %}';
+
+        document.getElementById('voiceInputButton').addEventListener('click', function () {
+            fetch('transcribe/', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.transcription) {
+                        const userInput = document.getElementById('userInput');
+                        userInput.value = data.transcription;
+                        fetchLocalRequest(userInput.value);
+                    } else {
+                        alert(data.error || 'An error occurred while transcribing audio.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
     <audio id="audioPlayer" controls>
         Your browser does not support the audio element.
     </audio>

@@ -1,4 +1,4 @@
-function fetchLocalRequest() {
+export function fetchLocalRequest() {
     const apiUrl = 'https://127.0.0.1:8000/ollama/local';
     const userInput = document.getElementById('userInput').value;
     const controller = new AbortController();

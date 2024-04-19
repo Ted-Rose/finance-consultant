@@ -6,6 +6,17 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from gtts import gTTS
 import os
+from .utils import voice_input
+
+@csrf_exempt
+def transcribe(request):
+    print("in here")
+    if request.method == 'POST':
+        # Call the voice_input function
+        transcription = voice_input()
+        return JsonResponse({'transcription': transcription})
+    else:
+        return JsonResponse({'error': 'This endpoint only supports POST requests.'})
 
 def production_request(request):
     # This view is called when the site is deployed online. It will make
