@@ -1,1 +1,5 @@
-django/finance_consultant/__pycache__
+__pycache__
+/django/data
+django/ollama_prompts.json
+django/media/prompt_responses
+/django/static/
