@@ -1,5 +1,5 @@
 export function fetchLocalRequest(userInput) {
-    const apiUrl = 'https://127.0.0.1:8000/ollama/local';
+    const apiUrl = 'https://your_ip_address:8000/ollama/local';
     // const userInput = document.getElementById('userInput').value;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 180000);

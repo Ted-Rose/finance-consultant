@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'financeconsultant.pythonanywhere.com',
     '127.0.0.1',
+    'your_ip_address'
     ]
 
 
@@ -58,12 +59,14 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'https://financeconsultant.pythonanywhere.com',
-    'http://127.0.0.1'
+    'http://127.0.0.1',
+    'your_ip_address'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://financeconsultant.pythonanywhere.com',
-    'http://127.0.0.1'
+    'http://127.0.0.1',
+    'https://your_ip_address'
 ]
 
 CORS_ALLOW_CREDENTIALS = False

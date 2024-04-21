@@ -114,7 +114,7 @@ def local_request(request):
         )
         text_to_audio.save(audio_file_path)
         audio_file_url = \
-            'https://127.0.0.1:8000/media/' + 'prompt_responses/prompt_response.mp3'
+            'https://your_ip_address:8000/media/' + 'prompt_responses/prompt_response.mp3'
 
         return JsonResponse({
             'response': full_response,

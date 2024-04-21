@@ -21,3 +21,7 @@ Ask questions about your transactions to an AI using speech
     - WAIT FOR A WHILE! Your locally hosted AI model won't run as fast as the models hosted on super computers. You should start seeing words returned in batches by the AI model in django's terminal within 3 minutes.
     - Once ollama has returned the full response then django's web site will display the answer under `AI Finance Consultant answers:` and play an audio of the message.
         - If audio doesn't play automatically grant the site access to audio via the browser's site settings
+
+# Deploy on local network
+1. Change all 5 occurrences across 3 files containing `your_ip_address` to your local IP address
+2. Now the project is accessible at https://your_ip_address:8000/ollama/production on your local network trough any other device (laptop or phone)
