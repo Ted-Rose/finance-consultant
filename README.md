@@ -24,4 +24,5 @@ Ask questions about your transactions to an AI using speech
 
 # Deploy on local network
 1. Change all 5 occurrences across 3 files containing `your_ip_address` to your local IP address
-2. Now the project is accessible at https://your_ip_address:8000/ollama/production on your local network trough any other device (laptop or phone)
+2. Run the project using `python manage.py runsslserver your_ip_address:8000`
+3. Now the project is accessible at https://your_ip_address:8000/ollama/production on your local network trough any other device (laptop or phone)
