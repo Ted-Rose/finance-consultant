@@ -10,7 +10,7 @@ def voice_input():
     # recognize speech using Sphinx
     try:
         transcribed_audio = r.recognize_sphinx(audio)
-        print("Sphinx thinks you said " + transcribed_audio)
+        print("\nYour voice input:\n" + transcribed_audio + "\n\n")
         return transcribed_audio
     except sr.UnknownValueError:
         print("Sphinx could not understand audio")

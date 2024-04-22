@@ -10,15 +10,15 @@
     <script src="{% static 'ollama/js/api_request.js' %}" type="module"></script>
 </head>
 
-<body>
-    <h2>Your private AI Finance Consultant</h2>
+<body class="container">
+    <h1>AI Finance Consultant</h1>
     <div class="logo-container">
         <img src="{{ MEDIA_PREFIX }}Finance_consultant_logo_no_mic.png" alt="Finance Consultant Logo">
     </div>
-    <h3>You asked:</h3>
-    <p id="prompt">Waiting for input...</p>
-    <h3>AI Finance Consultant answers:</h3>
-    <p id="response">Waiting for input...</p>
+    <h1>You asked:</h1>
+    <div class="text" id="prompt">Waiting for input...</div>
+    <h1>AI Finance Consultant answers:</h1>
+    <div class="text" id="response">Waiting for input...</div>
     <button id="voiceInputButton">Voice Input</button>
     <script type="module">
         import { fetchLocalRequest } from '{% static 'ollama/js/api_request.js' %}';
@@ -47,8 +47,8 @@
     <audio id="audioPlayer" controls>
         Your browser does not support the audio element.
     </audio>
-    <h2 id="error"></h2>
-    <h3>Your transactions</h3>
+    <div id="error"></div>
+    <h1>Your transactions</h1>
     <pre class="transactions">
         [
             {

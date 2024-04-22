@@ -73,7 +73,7 @@ def local_request(request):
         'model': 'llama2',
         'prompt': prompt
     }
-    print('prompt:\n', prompt)
+    print('\nYour prompt to AI model:\n', prompt, "\n\n")
     response = requests.post(url, json=data, stream=True)
     # Check if the request was successful
     if response.status_code == 200:
